@@ -28,10 +28,13 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  min-width: 0;
+  overflow-x: clip;
   min-height: 100svh;
   font-family: 'Inter', sans-serif;
   font-weight: 400;

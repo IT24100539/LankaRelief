@@ -14,10 +14,21 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.use('/api/requests', require('./routes/requests'));
+
 const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
-app.listen(PORT, () => {
+mongoose.connection.on('error', (err) => {
+  console.warn('MongoDB error:', err.message);
+});
+
+const server = app.listen(PORT, () => {
   console.log(`LankaRelief server listening on port ${PORT}`);
+});
+
+server.on('error', (err) => {
+  console.error('Failed to start server:', err.message);
+  process.exitCode = 1;
 });
 
 if (!uri) {
