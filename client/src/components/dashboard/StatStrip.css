@@ -1,0 +1,21 @@
+.stat-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+}
+
+.stat-strip .ui-stat {
+  min-width: 0;
+}
+
+.stat-strip .ui-stat__number,
+.stat-strip .ui-stat__label {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 700px) {
+  .stat-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

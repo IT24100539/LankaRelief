@@ -3,7 +3,8 @@ import Navbar from './components/shared/Navbar.jsx'
 import Ticker from './components/shared/Ticker.jsx'
 import About from './pages/About.jsx'
 import EmergencyDashboard from './pages/EmergencyDashboard.jsx'
-import Requests from './pages/Requests.jsx'
+import Dashboard from './pages/Dashboard.jsx'
+import HelpRequests from './pages/HelpRequests.jsx'
 import Home from './pages/Home.jsx'
 import OfferHelp from './pages/OfferHelp.jsx'
 import Shelters from './pages/Shelters.jsx'
@@ -23,10 +24,11 @@ export default function App() {
         <main id="main" className="site-main">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/requests" element={<Requests />} />
+            <Route path="/requests" element={<HelpRequests />} />
             <Route path="/offer" element={<OfferHelp />} />
             <Route path="/shelters" element={<Shelters />} />
-            <Route path="/dashboard" element={<EmergencyDashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/emergency-dashboard" element={<EmergencyDashboard />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </main>

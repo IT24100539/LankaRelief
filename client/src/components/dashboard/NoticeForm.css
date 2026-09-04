@@ -1,0 +1,74 @@
+.notice-form {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.notice-form__field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.notice-form__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.notice-form__input,
+.notice-form__select,
+.notice-form__textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--touch);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.notice-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.notice-form__input:focus-visible,
+.notice-form__select:focus-visible,
+.notice-form__textarea:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.notice-form__input.is-invalid,
+.notice-form__select.is-invalid,
+.notice-form__textarea.is-invalid {
+  border-color: var(--urgent);
+}
+
+.notice-form__error {
+  color: var(--urgent);
+  font-size: 0.8125rem;
+}
+
+.notice-form__success {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: var(--safe-bg);
+  color: var(--safe);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.notice-form__submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+@media (min-width: 700px) {
+  .notice-form__submit {
+    width: auto;
+    justify-self: start;
+  }
+}

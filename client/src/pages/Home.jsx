@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
+import StatStrip from '../components/dashboard/StatStrip.jsx'
 import Button from '../components/shared/Button.jsx'
-import StatCard from '../components/shared/StatCard.jsx'
 import './Home.css'
 
 const MODULES = [
@@ -49,11 +49,8 @@ export default function Home() {
       </section>
 
       <section className="home-section" aria-label="Current totals">
-        <div className="home-wrap home-grid">
-          <StatCard number={0} label="Open help requests" variant="urgent" />
-          <StatCard number={0} label="Active resource offers" />
-          <StatCard number={0} label="Shelters with space" variant="safe" />
-          <StatCard number={0} label="Urgent notices" variant="urgent" />
+        <div className="home-wrap">
+          <StatStrip />
         </div>
       </section>
 
