@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import OfferFeed from '../components/offers/OfferFeed.jsx'
 import OfferForm from '../components/offers/OfferForm.jsx'
-import OfferForm from '../components/offers/OfferForm.js'
 import './Offer.css'
 
 export default function Offer() {

@@ -9,13 +9,13 @@
 
 .home-hero {
   background: var(--navy-1);
-  color: #fff;
+  color: var(--on-dark);
   padding: 40px 0 48px;
 }
 
 .home-hero h1 {
   max-width: 16ch;
-  color: #fff;
+  color: var(--on-dark);
   font-size: clamp(2rem, 5vw, 3.15rem);
   font-weight: 700;
 }
@@ -23,7 +23,7 @@
 .home-hero__lede {
   max-width: 38rem;
   margin-top: 14px;
-  color: #d7dde6;
+  color: var(--navy-muted);
   font-size: 1.05rem;
 }
 
@@ -33,9 +33,13 @@
   margin-top: 24px;
 }
 
+.home-hero__actions .ui-btn {
+  width: 100%;
+}
+
 .home-hero .ui-btn--outline {
-  color: #fff;
-  border-color: #fff;
+  color: var(--on-dark);
+  border-color: var(--on-dark);
 }
 
 .home-hero .ui-btn--outline:hover {

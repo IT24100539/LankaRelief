@@ -1,0 +1,149 @@
+.about-page {
+  padding: 24px 0 40px;
+}
+
+.about-page__wrap {
+  width: min(1100px, calc(100% - 32px));
+  margin-inline: auto;
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+.about-page__intro h1 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.about-page__intro p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.about-page__why {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.about-page__why h2,
+.about-page__section h2 {
+  font-size: 1.15rem;
+}
+
+.about-page__why p {
+  color: var(--ink);
+  max-width: 62ch;
+  overflow-wrap: anywhere;
+}
+
+.about-page__section {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.about-page__steps,
+.about-page__team {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.about-page__step,
+.about-page__card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.about-page__step-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--navy-1);
+  color: var(--on-dark);
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.about-page__step h3,
+.about-page__card h3 {
+  font-size: 1.1rem;
+}
+
+.about-page__step p,
+.about-page__card p:not(.about-page__card-member) {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+}
+
+.about-page__step-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.about-page__step-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch);
+  font-weight: 600;
+}
+
+.about-page__card {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+.about-page__card-member {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy-3);
+}
+
+.about-page__card h3 {
+  color: var(--ink);
+}
+
+.about-page__card:hover {
+  border-color: var(--navy-3);
+}
+
+.about-page__card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (min-width: 700px) {
+  .about-page {
+    padding: 28px 0 48px;
+  }
+
+  .about-page__steps,
+  .about-page__team {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .about-page__steps,
+  .about-page__team {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

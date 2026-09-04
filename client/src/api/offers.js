@@ -1,15 +1,7 @@
-import axios from 'axios'
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '',
-})
+import { api, queryParams } from './client.js'
 
 export async function getOffers(filters = {}) {
-  const params = {}
-  for (const [key, value] of Object.entries(filters)) {
-    if (value) params[key] = value
-  }
-  const { data } = await api.get('/api/offers', { params })
+  const { data } = await api.get('/api/offers', { params: queryParams(filters) })
   return data
 }
 
@@ -22,5 +14,10 @@ export async function updateOfferAvailability(id, status) {
   const { data } = await api.patch(`/api/offers/${id}`, {
     availabilityStatus: status,
   })
+  return data
+}
+
+export async function deleteOffer(id) {
+  const { data } = await api.delete(`/api/offers/${id}`)
   return data
 }

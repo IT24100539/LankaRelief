@@ -3,11 +3,11 @@ import './shared.css'
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
-  { to: '/requests', label: 'Help Requests' },
-  { to: '/offer', label: 'Offer Help' },
-  { to: '/shelters', label: 'Shelters' },
-  { to: '/dashboard', label: 'Emergency Dashboard' },
-  { to: '/about', label: 'About' },
+  { to: '/requests', label: 'Help Requests', end: true },
+  { to: '/offer', label: 'Offer Help', end: true },
+  { to: '/shelters', label: 'Shelters', end: true },
+  { to: '/dashboard', label: 'Emergency Dashboard', end: true },
+  { to: '/about', label: 'About', end: true },
 ]
 
 export default function Navbar() {

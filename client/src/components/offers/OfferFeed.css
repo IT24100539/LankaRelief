@@ -78,6 +78,12 @@
   overflow-wrap: anywhere;
 }
 
+.offer-card__footer {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+
 .offer-card__footer .ui-btn {
   width: 100%;
 }
@@ -91,12 +97,17 @@
 
 @media (min-width: 700px) {
   .offer-feed__filters {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 20px 24px;
   }
 
   .offer-card {
     padding: 24px;
+  }
+
+  .offer-card__footer {
+    grid-template-columns: auto auto;
+    justify-content: end;
   }
 
   .offer-card__footer .ui-btn {

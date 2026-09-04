@@ -1,35 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getOffers, updateOfferAvailability } from '../../api/offers.js'
+import { deleteOffer, getOffers, updateOfferAvailability } from '../../api/offers.js'
+import { DISTRICTS } from '../../constants/districts.js'
+import { OFFER_STATUSES, RESOURCE_TYPES } from '../../constants/enums.js'
 import Button from '../shared/Button.jsx'
 import Chip from '../shared/Chip.jsx'
 import './OfferFeed.css'
-
-const DISTRICTS = [
-  'Colombo',
-  'Kandy',
-  'Galle',
-  'Ratnapura',
-  'Kalutara',
-  'Matara',
-  'Gampaha',
-  'Kurunegala',
-  'Jaffna',
-  'Batticaloa',
-]
-
-const RESOURCE_TYPES = [
-  'Dry rations',
-  'Drinking water',
-  'Cooked meals',
-  'Medicine',
-  'Transport',
-]
-
-function availabilityVariant(status) {
-  if (status === 'Available') return 'safe'
-  if (status === 'Reserved') return 'medium'
-  return 'status'
-}
 
 const NEXT_STATUS = {
   Available: { status: 'Reserved', label: 'Mark reserved' },
@@ -40,6 +15,7 @@ export default function OfferFeed({ refreshKey = 0 }) {
   const [filters, setFilters] = useState({
     district: '',
     resourceType: '',
+    availabilityStatus: '',
   })
   const [offers, setOffers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -84,6 +60,18 @@ export default function OfferFeed({ refreshKey = 0 }) {
     }
   }
 
+  async function removeOffer(offer) {
+    setUpdatingId(offer._id)
+    try {
+      await deleteOffer(offer._id)
+      await load()
+    } catch {
+      setError('Unable to delete this offer. Please try again.')
+    } finally {
+      setUpdatingId(null)
+    }
+  }
+
   return (
     <section className="offer-feed" aria-label="Resource offers">
       <div className="offer-feed__filters">
@@ -118,6 +106,22 @@ export default function OfferFeed({ refreshKey = 0 }) {
             ))}
           </select>
         </div>
+
+        <div className="offer-feed__filter">
+          <label htmlFor="offer-filter-status">Availability</label>
+          <select
+            id="offer-filter-status"
+            value={filters.availabilityStatus}
+            onChange={updateFilter('availabilityStatus')}
+          >
+            <option value="">All statuses</option>
+            {OFFER_STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {loading ? (
@@ -138,7 +142,7 @@ export default function OfferFeed({ refreshKey = 0 }) {
                   <h3 className="offer-card__title">
                     {offer.resourceType} — {offer.quantity} units
                   </h3>
-                  <Chip variant={availabilityVariant(offer.availabilityStatus)}>
+                  <Chip variant={offer.availabilityStatus}>
                     {offer.availabilityStatus}
                   </Chip>
                 </div>
@@ -148,8 +152,8 @@ export default function OfferFeed({ refreshKey = 0 }) {
                 {offer.notes ? (
                   <p className="offer-card__notes">{offer.notes}</p>
                 ) : null}
-                {next ? (
-                  <div className="offer-card__footer">
+                <div className="offer-card__footer">
+                  {next ? (
                     <Button
                       variant="dark"
                       disabled={updatingId === offer._id}
@@ -157,8 +161,15 @@ export default function OfferFeed({ refreshKey = 0 }) {
                     >
                       {updatingId === offer._id ? 'Updating…' : next.label}
                     </Button>
-                  </div>
-                ) : null}
+                  ) : null}
+                  <Button
+                    variant="ghost"
+                    disabled={updatingId === offer._id}
+                    onClick={() => removeOffer(offer)}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </article>
             )
           })}
