@@ -15,6 +15,8 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/requests', require('./routes/requests'));
+app.use('/api/offers', require('./routes/offers'));
+app.use('/api/shelters', require('./routes/shelters'));
 
 const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
