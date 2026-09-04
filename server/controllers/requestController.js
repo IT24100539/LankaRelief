@@ -1,8 +1,12 @@
-const mongoose = require('mongoose');
 const HelpRequest = require('../models/HelpRequest');
+const { REQUEST_STATUSES } = require('../utils/enums');
+const {
+  friendlyValidationMessage,
+  missingRequiredMessage,
+} = require('../utils/formErrors');
+const { isValidId } = require('../utils/ids');
 
 const FILTERS = ['district', 'category', 'urgency', 'status'];
-const STATUSES = ['Open', 'In progress', 'Resolved'];
 
 const FIELD_MESSAGES = {
   name: 'Please enter your name',
@@ -23,34 +27,6 @@ const REQUIRED_FIELDS = [
   ['description', 'Please enter a description'],
 ];
 
-function missingRequiredMessage(body = {}) {
-  for (const [field, message] of REQUIRED_FIELDS) {
-    if (!String(body[field] ?? '').trim()) return message;
-  }
-  return null;
-}
-
-function friendlyValidationMessage(err) {
-  if (err.name !== 'ValidationError') return null;
-
-  const first = Object.values(err.errors)[0];
-  if (!first) return 'Please check your details';
-
-  if (first.kind === 'required') {
-    return FIELD_MESSAGES[first.path] || `Please provide ${first.path}`;
-  }
-
-  if (first.kind === 'user defined' && first.message) {
-    return first.message;
-  }
-
-  return FIELD_MESSAGES[first.path] || first.message || 'Please check your details';
-}
-
-function isValidId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
-
 async function listRequests(req, res) {
   try {
     const filter = {};
@@ -67,7 +43,7 @@ async function listRequests(req, res) {
 
 async function createRequest(req, res) {
   try {
-    const missing = missingRequiredMessage(req.body);
+    const missing = missingRequiredMessage(req.body, REQUIRED_FIELDS);
     if (missing) {
       return res.status(400).json({ message: missing });
     }
@@ -75,7 +51,7 @@ async function createRequest(req, res) {
     const created = await HelpRequest.create(req.body);
     res.status(201).json(created);
   } catch (err) {
-    const message = friendlyValidationMessage(err);
+    const message = friendlyValidationMessage(err, FIELD_MESSAGES);
     if (message) {
       return res.status(400).json({ message });
     }
@@ -90,7 +66,7 @@ async function updateRequestStatus(req, res) {
     }
 
     const { status } = req.body;
-    if (!STATUSES.includes(status)) {
+    if (!REQUEST_STATUSES.includes(status)) {
       return res.status(400).json({ message: 'Please select a valid status' });
     }
 
@@ -106,7 +82,7 @@ async function updateRequestStatus(req, res) {
 
     res.json(updated);
   } catch (err) {
-    const message = friendlyValidationMessage(err);
+    const message = friendlyValidationMessage(err, FIELD_MESSAGES);
     if (message) {
       return res.status(400).json({ message });
     }

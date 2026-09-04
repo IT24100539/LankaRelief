@@ -1,48 +1,25 @@
 const mongoose = require('mongoose');
-
-const DISTRICTS = [
-  'Colombo',
-  'Kandy',
-  'Galle',
-  'Ratnapura',
-  'Kalutara',
-  'Matara',
-  'Gampaha',
-  'Kurunegala',
-  'Jaffna',
-  'Batticaloa',
-];
-
-const CATEGORIES = [
-  'Drinking water',
-  'Dry rations',
-  'Cooked meals',
-  'Medicine',
-  'Temporary shelter',
-  'Transport',
-];
-
-function isSriLankanMobile(value) {
-  const normalized = String(value).replace(/\s+/g, '');
-  return /^(07\d{8}|\+947\d{8})$/.test(normalized);
-}
+const { DISTRICTS } = require('../utils/districts');
+const {
+  REQUEST_CATEGORIES,
+  REQUEST_STATUSES,
+  URGENCY_LEVELS,
+} = require('../utils/enums');
+const { sriLankanContact } = require('../utils/validators');
 
 const helpRequestSchema = new mongoose.Schema({
   name: { type: String, required: true },
   contact: {
     type: String,
     required: true,
-    validate: {
-      validator: isSriLankanMobile,
-      message: 'Please enter a valid Sri Lankan contact number',
-    },
+    validate: sriLankanContact,
   },
   district: { type: String, required: true, enum: DISTRICTS },
   location: { type: String },
-  category: { type: String, required: true, enum: CATEGORIES },
+  category: { type: String, required: true, enum: REQUEST_CATEGORIES },
   description: { type: String, required: true },
-  urgency: { type: String, required: true, enum: ['High', 'Medium', 'Low'] },
-  status: { type: String, default: 'Open', enum: ['Open', 'In progress', 'Resolved'] },
+  urgency: { type: String, required: true, enum: URGENCY_LEVELS },
+  status: { type: String, default: 'Open', enum: REQUEST_STATUSES },
   createdAt: { type: Date, default: Date.now },
 });
 
