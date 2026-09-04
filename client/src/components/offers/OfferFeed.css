@@ -1,9 +1,9 @@
-.request-feed {
+.offer-feed {
   display: grid;
   gap: 16px;
 }
 
-.request-feed__filters {
+.offer-feed__filters {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
@@ -13,18 +13,18 @@
   padding: 16px;
 }
 
-.request-feed__filter {
+.offer-feed__filter {
   display: grid;
   gap: 6px;
 }
 
-.request-feed__filter label {
+.offer-feed__filter label {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink);
 }
 
-.request-feed__filter select {
+.offer-feed__filter select {
   width: 100%;
   min-height: var(--touch);
   padding: 10px 12px;
@@ -34,17 +34,17 @@
   color: var(--ink);
 }
 
-.request-feed__filter select:focus-visible {
+.offer-feed__filter select:focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 2px;
 }
 
-.request-feed__list {
+.offer-feed__list {
   display: grid;
   gap: 12px;
 }
 
-.request-card {
+.offer-card {
   display: grid;
   gap: 10px;
   min-width: 0;
@@ -54,7 +54,7 @@
   padding: 16px;
 }
 
-.request-card__top {
+.offer-card__top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -62,65 +62,55 @@
   min-width: 0;
 }
 
-.request-card__title {
+.offer-card__title {
   min-width: 0;
   font-size: 1.15rem;
   overflow-wrap: anywhere;
 }
 
-.request-card__meta {
+.offer-card__meta {
   color: var(--muted);
   font-size: 0.875rem;
 }
 
-.request-card__body {
+.offer-card__notes {
   color: var(--ink);
   overflow-wrap: anywhere;
 }
 
-.request-card__footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+.offer-card__footer {
+  display: grid;
+  gap: 8px;
   margin-top: 4px;
 }
 
-.request-card__actions {
-  display: grid;
-  gap: 8px;
+.offer-card__footer .ui-btn {
   width: 100%;
 }
 
-.request-card__actions .ui-btn {
-  width: 100%;
-}
-
-.request-feed__empty,
-.request-feed__status {
+.offer-feed__empty,
+.offer-feed__status {
   text-align: center;
   color: var(--muted);
   padding: 32px 16px;
 }
 
 @media (min-width: 700px) {
-  .request-feed__filters {
-    grid-template-columns: repeat(4, 1fr);
+  .offer-feed__filters {
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 20px 24px;
   }
 
-  .request-card {
+  .offer-card {
     padding: 24px;
   }
 
-  .request-card__actions {
-    width: auto;
+  .offer-card__footer {
     grid-template-columns: auto auto;
     justify-content: end;
   }
 
-  .request-card__actions .ui-btn {
+  .offer-card__footer .ui-btn {
     width: auto;
   }
 }

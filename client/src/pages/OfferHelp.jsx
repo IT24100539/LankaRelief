@@ -1,3 +1,1 @@
-export default function OfferHelp() {
-  return null
-}
+export { default } from './Offer.jsx'

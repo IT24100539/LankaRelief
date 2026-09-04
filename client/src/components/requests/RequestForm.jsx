@@ -1,32 +1,14 @@
 import { useState } from 'react'
 import { createRequest } from '../../api/requests.js'
+import { DISTRICTS } from '../../constants/districts.js'
+import { REQUEST_CATEGORIES, URGENCY_LEVELS } from '../../constants/enums.js'
+import { isSriLankanMobile } from '../../utils/phone.js'
 import Button from '../shared/Button.jsx'
+import { createField } from '../shared/Field.jsx'
 import Panel from '../shared/Panel.jsx'
 import './RequestForm.css'
 
-const DISTRICTS = [
-  'Colombo',
-  'Kandy',
-  'Galle',
-  'Ratnapura',
-  'Kalutara',
-  'Matara',
-  'Gampaha',
-  'Kurunegala',
-  'Jaffna',
-  'Batticaloa',
-]
-
-const CATEGORIES = [
-  'Drinking water',
-  'Dry rations',
-  'Cooked meals',
-  'Medicine',
-  'Temporary shelter',
-  'Transport',
-]
-
-const URGENCY = ['High', 'Medium', 'Low']
+const Field = createField('request-form')
 
 const EMPTY = {
   name: '',
@@ -36,11 +18,6 @@ const EMPTY = {
   category: '',
   urgency: '',
   description: '',
-}
-
-function isSriLankanMobile(value) {
-  const normalized = String(value).replace(/\s+/g, '')
-  return /^(07\d{8}|\+947\d{8})$/.test(normalized)
 }
 
 function validate(values) {
@@ -60,29 +37,6 @@ function validate(values) {
   if (!values.description.trim()) errors.description = 'Please enter a description'
 
   return errors
-}
-
-function Field({
-  id,
-  label,
-  required,
-  error,
-  children,
-}) {
-  return (
-    <div className="request-form__field">
-      <label className="request-form__label" htmlFor={id}>
-        {label}
-        {required ? '*' : null}
-      </label>
-      {children}
-      {error ? (
-        <p className="request-form__error" id={`${id}-error`} role="alert">
-          {error}
-        </p>
-      ) : null}
-    </div>
-  )
 }
 
 export default function RequestForm({ onSubmit }) {
@@ -206,7 +160,7 @@ export default function RequestForm({ onSubmit }) {
             onChange={update('category')}
           >
             <option value="">Select a category</option>
-            {CATEGORIES.map((category) => (
+            {REQUEST_CATEGORIES.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -222,7 +176,7 @@ export default function RequestForm({ onSubmit }) {
             onChange={update('urgency')}
           >
             <option value="">Select urgency</option>
-            {URGENCY.map((level) => (
+            {URGENCY_LEVELS.map((level) => (
               <option key={level} value={level}>
                 {level}
               </option>

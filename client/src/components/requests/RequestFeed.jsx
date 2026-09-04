@@ -1,33 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getRequests, updateRequestStatus } from '../../api/requests.js'
+import { getRequests, updateRequestStatus, deleteRequest } from '../../api/requests.js'
+import { DISTRICTS } from '../../constants/districts.js'
+import {
+  REQUEST_CATEGORIES,
+  REQUEST_STATUSES,
+  URGENCY_LEVELS,
+} from '../../constants/enums.js'
+import { relativeTime } from '../../utils/relativeTime.js'
 import Button from '../shared/Button.jsx'
 import Chip from '../shared/Chip.jsx'
 import './RequestFeed.css'
-
-const DISTRICTS = [
-  'Colombo',
-  'Kandy',
-  'Galle',
-  'Ratnapura',
-  'Kalutara',
-  'Matara',
-  'Gampaha',
-  'Kurunegala',
-  'Jaffna',
-  'Batticaloa',
-]
-
-const CATEGORIES = [
-  'Drinking water',
-  'Dry rations',
-  'Cooked meals',
-  'Medicine',
-  'Temporary shelter',
-  'Transport',
-]
-
-const URGENCY = ['High', 'Medium', 'Low']
-const STATUSES = ['Open', 'In progress', 'Resolved']
 
 const NEXT_STATUS = {
   Open: { status: 'In progress', label: 'Mark in progress' },
@@ -44,27 +26,6 @@ function shortTitle(description, category) {
 
   const preview = words.slice(0, 6).join(' ')
   return words.length > 6 ? `${preview}…` : preview
-}
-
-function relativeTime(value) {
-  const then = new Date(value).getTime()
-  if (Number.isNaN(then)) return 'just now'
-
-  const minutes = Math.max(0, Math.floor((Date.now() - then) / 60000))
-  if (minutes < 1) return 'just now'
-  if (minutes < 60) return `${minutes} min ago`
-
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`
-
-  const days = Math.floor(hours / 24)
-  return `${days} day${days === 1 ? '' : 's'} ago`
-}
-
-function urgencyVariant(urgency) {
-  if (urgency === 'High') return 'urgent'
-  if (urgency === 'Medium') return 'medium'
-  return 'safe'
 }
 
 export default function RequestFeed({ refreshKey = 0 }) {
@@ -117,6 +78,18 @@ export default function RequestFeed({ refreshKey = 0 }) {
     }
   }
 
+  async function removeRequest(request) {
+    setUpdatingId(request._id)
+    try {
+      await deleteRequest(request._id)
+      await load()
+    } catch {
+      setError('Unable to delete this request. Please try again.')
+    } finally {
+      setUpdatingId(null)
+    }
+  }
+
   return (
     <section className="request-feed" aria-label="Help requests">
       <div className="request-feed__filters">
@@ -144,7 +117,7 @@ export default function RequestFeed({ refreshKey = 0 }) {
             onChange={updateFilter('category')}
           >
             <option value="">All categories</option>
-            {CATEGORIES.map((category) => (
+            {REQUEST_CATEGORIES.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -160,7 +133,7 @@ export default function RequestFeed({ refreshKey = 0 }) {
             onChange={updateFilter('urgency')}
           >
             <option value="">All urgency levels</option>
-            {URGENCY.map((level) => (
+            {URGENCY_LEVELS.map((level) => (
               <option key={level} value={level}>
                 {level}
               </option>
@@ -176,7 +149,7 @@ export default function RequestFeed({ refreshKey = 0 }) {
             onChange={updateFilter('status')}
           >
             <option value="">All statuses</option>
-            {STATUSES.map((status) => (
+            {REQUEST_STATUSES.map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
@@ -203,7 +176,7 @@ export default function RequestFeed({ refreshKey = 0 }) {
                   <h3 className="request-card__title">
                     {shortTitle(request.description, request.category)}
                   </h3>
-                  <Chip variant={urgencyVariant(request.urgency)}>
+                  <Chip variant={request.urgency}>
                     {request.urgency}
                   </Chip>
                 </div>
@@ -214,15 +187,24 @@ export default function RequestFeed({ refreshKey = 0 }) {
                 <p className="request-card__body">{request.description}</p>
                 <div className="request-card__footer">
                   <Chip variant="status">{request.status}</Chip>
-                  {next ? (
+                  <div className="request-card__actions">
+                    {next ? (
+                      <Button
+                        variant="dark"
+                        disabled={updatingId === request._id}
+                        onClick={() => advanceStatus(request)}
+                      >
+                        {updatingId === request._id ? 'Updating…' : next.label}
+                      </Button>
+                    ) : null}
                     <Button
-                      variant="dark"
+                      variant="ghost"
                       disabled={updatingId === request._id}
-                      onClick={() => advanceStatus(request)}
+                      onClick={() => removeRequest(request)}
                     >
-                      {updatingId === request._id ? 'Updating…' : next.label}
+                      Remove
                     </Button>
-                  ) : null}
+                  </div>
                 </div>
               </article>
             )

@@ -25,16 +25,16 @@
 
 .ui-btn--urgent {
   background: var(--urgent);
-  color: #fff;
+  color: var(--on-dark);
 }
 
 .ui-btn--urgent:hover:not(:disabled) {
-  background: #a3380b;
+  background: var(--urgent-hover);
 }
 
 .ui-btn--dark {
   background: var(--navy-1);
-  color: #fff;
+  color: var(--on-dark);
 }
 
 .ui-btn--dark:hover:not(:disabled) {
@@ -58,7 +58,7 @@
 }
 
 .ui-btn--ghost:hover:not(:disabled) {
-  background: #e4e7e4;
+  background: var(--ghost-hover);
 }
 
 .ui-chip {
@@ -91,7 +91,7 @@
 
 .ui-chip--status {
   color: var(--navy-3);
-  background: #e7edf5;
+  background: var(--chip-status-bg);
 }
 
 .ui-panel {
@@ -161,7 +161,7 @@
   min-height: 36px;
   padding: 8px 16px;
   background: var(--urgent);
-  color: #fff;
+  color: var(--on-dark);
   font-size: 0.8125rem;
   font-weight: 600;
 }
@@ -171,7 +171,7 @@
   height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #fff;
+  background: var(--on-dark);
   animation: ui-pulse 1.4s ease-in-out infinite;
 }
 
@@ -201,7 +201,7 @@
   top: 0;
   z-index: 20;
   background: var(--navy-1);
-  color: #fff;
+  color: var(--on-dark);
 }
 
 .ui-nav__inner {
@@ -220,7 +220,7 @@
   align-items: center;
   gap: 10px;
   min-height: 44px;
-  color: #fff;
+  color: var(--on-dark);
   font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 700;
@@ -244,22 +244,22 @@
 .ui-nav__link {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: var(--touch);
   padding: 6px 10px;
   border-radius: var(--radius);
-  color: #d7dde6;
+  color: var(--navy-muted);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 600;
 }
 
 .ui-nav__link:hover {
-  color: #fff;
+  color: var(--on-dark);
   background: var(--navy-2);
 }
 
 .ui-nav__link.is-active {
-  color: #fff;
+  color: var(--on-dark);
   background: var(--navy-3);
 }
 
@@ -278,7 +278,16 @@
   }
 
   .ui-nav__links {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
     min-width: 0;
+  }
+
+  .ui-nav__link {
+    justify-content: center;
+    text-align: center;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 }
