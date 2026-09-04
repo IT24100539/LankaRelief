@@ -95,10 +95,17 @@
 }
 
 .ui-panel {
+  min-width: 0;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 24px;
+  padding: 16px;
+}
+
+@media (min-width: 700px) {
+  .ui-panel {
+    padding: 24px;
+  }
 }
 
 .ui-stat {
@@ -150,6 +157,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   min-height: 36px;
   padding: 8px 16px;
   background: var(--urgent);
@@ -169,6 +177,8 @@
 
 .ui-ticker__message {
   margin: 0;
+  min-width: 0;
+  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -263,17 +273,12 @@
   .ui-nav__inner {
     flex-direction: column;
     align-items: stretch;
+    min-width: 0;
     padding: 8px 0 10px;
   }
 
   .ui-nav__links {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
-  }
-
-  .ui-nav__link {
-    flex: 0 0 auto;
+    flex-wrap: wrap;
+    min-width: 0;
   }
 }

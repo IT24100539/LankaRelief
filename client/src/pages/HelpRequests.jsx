@@ -1,3 +1,1 @@
-export default function HelpRequests() {
-  return null
-}
+export { default } from './Requests.jsx'

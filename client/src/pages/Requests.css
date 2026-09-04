@@ -1,0 +1,42 @@
+.requests-page {
+  padding: 24px 0 40px;
+}
+
+.requests-page__wrap {
+  width: min(1100px, calc(100% - 32px));
+  margin-inline: auto;
+  display: grid;
+  gap: 20px;
+}
+
+.requests-page__intro h1 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.requests-page__intro p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.requests-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+  min-width: 0;
+}
+
+.requests-page__grid > * {
+  min-width: 0;
+}
+
+@media (min-width: 700px) {
+  .requests-page {
+    padding: 28px 0 48px;
+  }
+
+  .requests-page__grid {
+    grid-template-columns: 2fr 3fr;
+    gap: 20px;
+  }
+}
