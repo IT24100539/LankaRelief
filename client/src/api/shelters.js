@@ -1,4 +1,4 @@
-import { api, queryParams } from './client.js'
+import { api, queryParams } from './api.js'
 
 export async function getShelters(filters = {}) {
   const { data } = await api.get('/api/shelters', { params: queryParams(filters) })

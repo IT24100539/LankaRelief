@@ -44,7 +44,7 @@ const SAMPLES = [
     location: 'Eravur',
     category: 'Medicine',
     description:
-      'Requesting basic first-aid kits and fever medicine for the school shelter.',
+      'Requesting first-aid kits and fever medicine for families at the Eravur school shelter.',
     urgency: 'Medium',
     status: 'Open',
   },
@@ -73,7 +73,7 @@ const SAMPLES = [
 ];
 
 async function seed() {
-  const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+  const uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error('MONGODB_URI is missing. Copy server/.env.example to server/.env');
   }

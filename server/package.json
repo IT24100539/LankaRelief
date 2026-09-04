@@ -9,7 +9,8 @@
     "seed:requests": "node seed/seedRequests.js",
     "seed:offers": "node seed/seedOffers.js",
     "seed:shelters": "node seed/seedShelters.js",
-    "seed:notices": "node seed/seedNotices.js"
+    "seed:notices": "node seed/seedNotices.js",
+    "seed:all": "npm run seed:requests && npm run seed:offers && npm run seed:shelters && npm run seed:notices"
   },
   "keywords": [],
   "author": "",
